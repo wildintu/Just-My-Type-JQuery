@@ -39,6 +39,15 @@ $(document).ready(function() {
             display = sentences[i];
             $('#sentence').text(display);
 
+            //get yellow block to move left
+            let pixelVal = 4;
+            $('#karen').keypress(function() {
+                let yb = $('#yellow-block');
+                $(yb).css('left', pixelVal + 'px');
+                pixelVal = pixelVal + 4;
+                
+            })
+            
             
         };
     };
