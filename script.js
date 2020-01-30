@@ -58,8 +58,8 @@ $(document).ready(function () {
         if (letterIndex == currentSentence.length) {
             sentIndex++;
             letterIndex = 0;
-            currentLetter = currentSentence[letterIndex];
             currentSentence = sentences[sentIndex];
+            currentLetter = currentSentence[letterIndex];
             $('#sentence').text(currentSentence);
             $('#target-letter').text(currentLetter);
             //console.log(letterIndex);
