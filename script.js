@@ -1,9 +1,9 @@
 $(document).ready(function () {
     let sentences = ['ten ate neite ate nee enet ite ate inet ent eate',
-                     'Too ato too nOt enot one totA not anot tOO aNot',
-                     'oat itain oat tain nate eate tea anne inant nean',
-                     'itant eate anot eat nato inate eat anot tain eat',
-                     'nee ene ate ite tent tiet ent ine ene ete ene ate'];
+        'Too ato too nOt enot one totA not anot tOO aNot',
+        'oat itain oat tain nate eate tea anne inant nean',
+        'itant eate anot eat nato inate eat anot tain eat',
+        'nee ene ate ite tent tiet ent ine ene ete ene ate'];
 
     let sentIndex = 0;
     let letterIndex = 0;
@@ -11,11 +11,12 @@ $(document).ready(function () {
     //console.log(currentSentence);
     let currentLetter = currentSentence[letterIndex];
     //console.log(currentLetter);
+    let numberOfWords = 54;
+    let mistakes = 0;
+    let gameover = false;
 
     $('#sentence').text(currentSentence);
     $('#target-letter').text(currentLetter);
-
-
     //Hide uppercase keyboard
     $('#keyboard-upper-container').hide();
 
@@ -44,34 +45,108 @@ $(document).ready(function () {
         $('#' + e.keyCode).addClass('highlight');
         //console log to see if the letter typed matches the letter in sentence - if so, will log true, or otherwise will log false
         //console.log(currentSentence.charCodeAt(letterIndex) === e.keyCode);
+        //if corect key is entered, give a ok glyph or incorrect give remove glyph
         if (currentSentence.charCodeAt(letterIndex) === e.keyCode) {
             $('#feedback').append('<span class="glyphicon glyphicon-ok"></span>');
         } else {
-            $('#feedback').append('<span class="glyphicon glyphicon-remove"></span>')
-        }
-        $('#yellow-block').css('left','+=17.5px');
+            $('#feedback').append('<span class="glyphicon glyphicon-remove"></span>');
+            mistakes++;
+        };
+        //move yellow block in conjunction with which letter user is on
+        $('#yellow-block').css('left', '+=17.5px');
         letterIndex++;
+
+        //test sentence check
+        //console.log('letterIndex: '+ letterIndex + 'currentSentenceLength: ' + currentSentence.length);
+        if (letterIndex == currentSentence.length) {
+            sentIndex++;
+            if (sentIndex == sentences.length) {
+                gameover = true;
+                //$('#feedback').remove();
+                console.log('gameover');
+                // if(gameover) {
+                //     $('sentence').empty();
+                //     $('target-letter').empty();
+                //     $('#yellow-block').empty();
+                //     $('#feedback').empty();
+
+                // }
+            }
+            if (!gameover) {
+                letterIndex = 0;
+                currentSentence = sentences[sentIndex];
+                currentLetter = currentSentence[letterIndex];
+                $('#sentence').text(currentSentence);
+                $('#target-letter').text(currentLetter);
+                //console.log(letterIndex);
+                //console.log(currentSentence);
+                $('#yellow-block').css('left', '20px');
+                $('#feedback').empty();
+                $('#feedback').stop()
+            };
+
+            console.log('gameover2' + gameover)
+            //}
+            //clear screen and display final score
+            if (gameover == true) {
+                //console.log('boom')
+                $('#sentence').empty();
+                $('#target-letter').empty();
+                $('#yellow-block').css('left', '2000px');
+                $('#feedback').remove();
+                //create timer and score
+                
+
+            }
+
+        };
+
+
+
+
+
         currentLetter = currentSentence[letterIndex];
         $('#target-letter').text(currentLetter);
         //console.log(sentIndex);
-        console.log(currentLetter);
-        if (letterIndex == currentSentence.length) {
-            sentIndex++;
-            letterIndex = 0;
-            currentSentence = sentences[sentIndex];
-            currentLetter = currentSentence[letterIndex];
-            $('#sentence').text(currentSentence);
-            $('#target-letter').text(currentLetter);
-            //console.log(letterIndex);
-            console.log(currentSentence);
-            $('#yellow-block').css('left', '20px');
-            $('#feedback').empty();
-            
-            
-            
+        //console.log(currentLetter);
 
-        }
+        //when current sentence is finished, reset to the next sentence
+
+        //console.log(currentSentence.length)
+        // if (letterIndex == currentSentence.length) {
+        //     sentIndex++;
+        //     letterIndex = 0;
+        //     currentSentence = sentences[sentIndex];
+        //     currentLetter = currentSentence[letterIndex];
+        //     $('#sentence').text(currentSentence);
+        //     $('#target-letter').text(currentLetter);
+        //     //console.log(letterIndex);
+        //     //console.log(currentSentence);
+        //     $('#yellow-block').css('left', '20px');
+        //     $('#feedback').empty();
+
+        //     //if (sentIndex == sentences.length) {
+        //         console.log('boom');
+
+        //     //}
+
+
+        // };
+
+        // console.log(mistakes);
+        // return mistakes;
+
+        //calculate words per minute and display on screen
+        //let score = numberOfWords / minutes - 2 * mistakes
+
+
+
+
     });
+
+
+
+
 });
 
 
