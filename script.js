@@ -52,20 +52,25 @@ $(document).ready(function () {
         //$('#' + e.keyCode).css('background-color', 'yellow');
         $('#' + e.keyCode).addClass('highlight');
         //console log to see if the letter typed matches the letter in sentence - if so, will log true, or otherwise will log false
-        //console.log(currentSentence.charCodeAt(letterIndex) === e.keyCode);
+        console.log(currentSentence.charCodeAt(letterIndex) === e.keyCode);
         //if corect key is entered, give a ok glyph or incorrect give remove glyph
         if (currentSentence.charCodeAt(letterIndex) === e.keyCode) {
-            
+            next();
             $('#feedback').append('<span class="glyphicon glyphicon-ok"></span>');
         } else {
+            
             $('#feedback').append('<span class="glyphicon glyphicon-remove"></span>');
             mistakes++;
         };
         //move yellow block in conjunction with which letter user is on
+        function next() {
         $('#yellow-block').css('left', '+=17.5px');
         letterIndex++;
         currentLetter = currentSentence[letterIndex];
         $('#target-letter').text(currentLetter);
+
+        }
+        
 
         //test sentence check
         //console.log('letterIndex: '+ letterIndex + 'currentSentenceLength: ' + currentSentence.length);
@@ -101,32 +106,43 @@ $(document).ready(function () {
             //clear screen and display final score
             if (gameover == true) {
                 //console.log('boom')
-                $('#sentence').empty();
-                $('#target-letter').empty();
-                $('#yellow-block').css('left', '2000px');
-                $('#feedback').remove();
+                clearTop();
                 //create timer and score
                 endDate = new Date();
                 endTime = endDate.getTime();
-                console.log(startTime);
-                console.log(endTime);
+                //console.log(startTime);
+                //console.log(endTime);
                 let diff = Math.abs(new Date(endTime) - new Date(startTime));
-                console.log(diff);
+                //console.log(diff);
                 let sec = Math.floor(diff/1000);
-                console.log(sec);
+                //console.log(sec);
                 let minutes = Math.floor(sec/60);
-                console.log(minutes);
-                console.log(mistakes);
-                score = Math.round(54 / minutes - 2  * mistakes);
-                console.log(score);
+                //console.log(minutes);
+                //console.log(mistakes);
+                let score = 54 / minutes - 2  * mistakes;
 
+                //if (score = )
+                //console.log(score);
+                $('#feedback').append('<span class="gameoverbro">Game Over! Words per minute: ' + score + ' and mistakes: ' + mistakes+' </span>')
+                $('#feedback').append('<inline-block></inline-block');
+                $('#feedback').append('<button id="btn" type="button" onClick="window.location.reload()"> New Game </button>');
+                
             }
+
+            
 
         };
 
+        function clearTop() {
+            $('#sentence').remove();
+            $('#target-letter').remove();
+            $('#yellow-block').css('left', '2000px');
+            $('#feedback').find('span').remove();
+        }
 
 
 
+        
 
         
 
