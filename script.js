@@ -14,6 +14,7 @@ $(document).ready(function () {
     let numberOfWords = 54;
     let mistakes = 0;
     let gameover = false;
+    let timerOn = false;
 
     $('#sentence').text(currentSentence);
     $('#target-letter').text(currentLetter);
@@ -41,12 +42,20 @@ $(document).ready(function () {
     //when keys are pressed, they should be highlighted in browser
     //console.log(x);
     $(document).keypress(function (e) {
+        if (timerOn === false) {
+            startDate = new Date();
+            startTime = startDate.getTime();
+            timerOn = true;
+        }
+        
+        //console.log(startTime);
         //$('#' + e.keyCode).css('background-color', 'yellow');
         $('#' + e.keyCode).addClass('highlight');
         //console log to see if the letter typed matches the letter in sentence - if so, will log true, or otherwise will log false
         //console.log(currentSentence.charCodeAt(letterIndex) === e.keyCode);
         //if corect key is entered, give a ok glyph or incorrect give remove glyph
         if (currentSentence.charCodeAt(letterIndex) === e.keyCode) {
+            
             $('#feedback').append('<span class="glyphicon glyphicon-ok"></span>');
         } else {
             $('#feedback').append('<span class="glyphicon glyphicon-remove"></span>');
@@ -55,6 +64,8 @@ $(document).ready(function () {
         //move yellow block in conjunction with which letter user is on
         $('#yellow-block').css('left', '+=17.5px');
         letterIndex++;
+        currentLetter = currentSentence[letterIndex];
+        $('#target-letter').text(currentLetter);
 
         //test sentence check
         //console.log('letterIndex: '+ letterIndex + 'currentSentenceLength: ' + currentSentence.length);
@@ -85,7 +96,7 @@ $(document).ready(function () {
                 $('#feedback').stop()
             };
 
-            console.log('gameover2' + gameover)
+            //console.log('gameover2' + gameover)
             //}
             //clear screen and display final score
             if (gameover == true) {
@@ -95,7 +106,19 @@ $(document).ready(function () {
                 $('#yellow-block').css('left', '2000px');
                 $('#feedback').remove();
                 //create timer and score
-                
+                endDate = new Date();
+                endTime = endDate.getTime();
+                console.log(startTime);
+                console.log(endTime);
+                let diff = Math.abs(new Date(endTime) - new Date(startTime));
+                console.log(diff);
+                let sec = Math.floor(diff/1000);
+                console.log(sec);
+                let minutes = Math.floor(sec/60);
+                console.log(minutes);
+                console.log(mistakes);
+                score = Math.round(54 / minutes - 2  * mistakes);
+                console.log(score);
 
             }
 
@@ -105,8 +128,10 @@ $(document).ready(function () {
 
 
 
-        currentLetter = currentSentence[letterIndex];
-        $('#target-letter').text(currentLetter);
+        
+
+
+
         //console.log(sentIndex);
         //console.log(currentLetter);
 
