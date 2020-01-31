@@ -1,9 +1,10 @@
 $(document).ready(function () {
-    let sentences = ['ten ate neite ate nee enet ite ate inet ent eate',
-        'Too ato too nOt enot one totA not anot tOO aNot',
-        'oat itain oat tain nate eate tea anne inant nean',
-        'itant eate anot eat nato inate eat anot tain eat',
-        'nee ene ate ite tent tiet ent ine ene ete ene ate'];
+    let sentences = //['cat', 'dog', 'bird', 'fish', 'rock']
+    ['ten ate neite ate nee enet ite ate inet ent eate',
+    'Too ato too nOt enot one totA not anot tOO aNot',
+    'oat itain oat tain nate eate tea anne inant nean',
+    'itant eate anot eat nato inate eat anot tain eat',
+    'nee ene ate ite tent tiet ent ine ene ete ene ate'];
 
     let sentIndex = 0;
     let letterIndex = 0;
@@ -11,7 +12,7 @@ $(document).ready(function () {
     //console.log(currentSentence);
     let currentLetter = currentSentence[letterIndex];
     //console.log(currentLetter);
-    let numberOfWords = 54;
+    let numberOfWords = 5;
     let mistakes = 0;
     let gameover = false;
     let timerOn = false;
@@ -79,7 +80,7 @@ $(document).ready(function () {
             if (sentIndex == sentences.length) {
                 gameover = true;
                 //$('#feedback').remove();
-                console.log('gameover');
+                //console.log('gameover');
                 // if(gameover) {
                 //     $('sentence').empty();
                 //     $('target-letter').empty();
@@ -114,18 +115,18 @@ $(document).ready(function () {
                 //console.log(endTime);
                 let diff = Math.abs(new Date(endTime) - new Date(startTime));
                 //console.log(diff);
-                let sec = Math.floor(diff/1000);
+                let minutes = diff/60000;
+                //let sec = (diff/1000);
                 //console.log(sec);
-                let minutes = Math.floor(sec/60);
+                //let minutes = (sec/60);
                 //console.log(minutes);
                 //console.log(mistakes);
-                let score = 54 / minutes - 2  * mistakes;
+                let score = numberOfWords / minutes - 2  * mistakes;
 
                 //if (score = )
                 //console.log(score);
-                $('#feedback').append('<span class="gameoverbro">Game Over! Words per minute: ' + score + ' and mistakes: ' + mistakes+' </span>')
-                $('#feedback').append('<inline-block></inline-block');
-                $('#feedback').append('<button id="btn" type="button" onClick="window.location.reload()"> New Game </button>');
+                $('#feedback').append('<span class="gameoverbro">Game Over! Words per minute: ' + score.toFixed(0) + ' and mistakes: ' + mistakes+' </span>')
+                $('#target-letter').append('<button id="btn" type="button" onClick="window.location.reload()"> New Game </button>');
                 
             }
 
@@ -135,7 +136,7 @@ $(document).ready(function () {
 
         function clearTop() {
             $('#sentence').remove();
-            $('#target-letter').remove();
+            $('#target-letter').empty();
             $('#yellow-block').css('left', '2000px');
             $('#feedback').find('span').remove();
         }
